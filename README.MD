@@ -4,6 +4,8 @@ ViewModel类的设计目的是以一种关注生命周期的方式存储和管�
 LiveData是一个可观察的数据持有者类。与常见的观察者不同，LiveData是有生命周期感知的。这意味着它尊重其他应用程序组件的生命周期，比如Activity、Fragment或Service。这种感知确保LiveData只更新处于生命周期状态内的应用程序组件。
 # 使用方法
 ## 定义ViewModel
+> 注意：  
+> 由于ViewModel比Activity或Fragment的实例要活的长，它不应该引用一个View，或者任何一个可能持有Activity的上下文引用的类。如果ViewModel需要引用Application的上下文（如，开启系统的服务），它可以继承AndroidViewModel类，此类有一个构造器接收Application（因为Application类继承自Context）.
 ```java
 public class AccountModel extends AndroidViewModel {
     private static final String TAG = AccountModel.class.getSimpleName();
@@ -38,6 +40,7 @@ public class AccountModel extends AndroidViewModel {
         super.onCleared();
         AppLog.d(TAG, "onCleared");
     }
+}
 ```
 ## 使用
 ```java
